@@ -1,0 +1,9 @@
+selenium
+webdriver-manager
+psycopg2-binary
+pandas
+numpy
+python-dotenv
+SQLAlchemy
+beautifulsoup4
+lxml
