@@ -1,9 +1,3 @@
-"""
-ML Schema — One Big Table (OBT) / Feature Store.
-All features in one flat table. No encoding, scaling, or SMOTE here —
-those transformations happen in the ML notebook after extraction.
-"""
-
 import pandas as pd
 import numpy as np
 from src.utils.db import get_connection, execute_query, bulk_insert
@@ -60,23 +54,23 @@ _COLS = [
     "age_bien", "categorie_prix", "titre", "lien", "scraped_at",
 ]
 
-# PostgreSQL INTEGER range
+
 INT_MIN = -2_147_483_648
 INT_MAX =  2_147_483_647
 
-# Columns that must fit in PostgreSQL INTEGER
+
 _INT_COLS = ["nb_chambres", "nb_salles_bain", "annee_construction", "age_bien"]
 
 
 def _safe_int(val):
-    """Convert value to safe PostgreSQL INTEGER or None."""
+    
     if val is None or (isinstance(val, float) and np.isnan(val)):
         return None
     try:
         v = int(val)
         if INT_MIN <= v <= INT_MAX:
             return v
-        return None  # out of range → treat as missing
+        return None  
     except (ValueError, TypeError, OverflowError):
         return None
 
@@ -103,18 +97,18 @@ def run_ml_schema(df: pd.DataFrame | None = None):
         df = _fetch_clean()
         logger.info(f"Loaded {len(df)} rows from clean.annonces")
 
-    # Check all columns exist
+    
     missing = [c for c in _COLS if c not in df.columns]
     if missing:
         logger.error(f"Missing columns in DataFrame: {missing}")
         return
 
-    # Skip if empty
+    
     if df.empty:
         logger.warning("DataFrame is empty — skipping ML schema load.")
         return
 
-    # Check target variable
+    
     null_prix = df["prix"].isna().sum()
     total     = len(df)
     logger.info(f"Target variable (prix): {total - null_prix}/{total} valid values")
@@ -123,7 +117,7 @@ def run_ml_schema(df: pd.DataFrame | None = None):
         logger.warning("All prix values are NULL — skipping feature store load.")
         return
 
-    # ✅ FIX: safely cast integer columns to prevent overflow
+    
     df = df.copy()
     for col in _INT_COLS:
         if col in df.columns:
@@ -132,7 +126,7 @@ def run_ml_schema(df: pd.DataFrame | None = None):
     sub  = df[_COLS].where(pd.notna(df[_COLS]), None)
     rows = [tuple(r) for r in sub.itertuples(index=False, name=None)]
 
-    # ✅ FIX: replace any remaining numpy int types with Python native int/None
+    
     safe_rows = []
     for row in rows:
         safe_row = []
