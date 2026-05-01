@@ -1,20 +1,8 @@
-"""
-Pipeline orchestrator — runs all steps in sequence with automatic retry.
-
-Order:
-  1. Extract   (scraping → data/bronze/)
-  2. Staging   (bronze → staging.raw_annonces)
-  3. Clean     (staging → clean.annonces + data/silver/)
-  4. BI Schema (clean  → bi_schema star schema)
-  5. ML Schema (clean  → ml_schema.feature_store)
-  6. Cleanup   (truncate staging)
-"""
-
 import sys
 import time
 import os
 
-# Allow running as  python src/main.py  from project root
+
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from src.extract.scraper        import run_scraper
@@ -27,7 +15,7 @@ from src.utils.logger           import get_logger
 
 logger       = get_logger("pipeline")
 MAX_RETRIES  = 3
-RETRY_DELAY  = 10   # seconds between retries
+RETRY_DELAY  = 10   
 
 
 # ── Retry wrapper ─────────────────────────────────────────────────────────────
@@ -68,10 +56,10 @@ def run_pipeline():
     t0 = time.time()
 
     try:
-        # 1 — Extract
+        
         raw = _run("EXTRACT", run_scraper, max_pages=1)
 
-        # 🛡️ Bug 4 Fix — early-exit guard for empty scrape result
+        
         if not raw:
             logger.critical(
                 "EXTRACT returned an empty result set — "
@@ -79,7 +67,7 @@ def run_pipeline():
             )
             sys.exit(1)
 
-        if len(raw) < 10:                          # tune this threshold
+        if len(raw) < 10:                          
             logger.warning(
                 f"EXTRACT returned only {len(raw)} listings "
                 f"(expected ≥ 10) — possible partial block."
