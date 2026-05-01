@@ -71,6 +71,20 @@ def run_pipeline():
         # 1 — Extract
         raw = _run("EXTRACT", run_scraper, max_pages=1)
 
+        # 🛡️ Bug 4 Fix — early-exit guard for empty scrape result
+        if not raw:
+            logger.critical(
+                "EXTRACT returned an empty result set — "
+                "possible bot block or source issue. Pipeline aborted."
+            )
+            sys.exit(1)
+
+        if len(raw) < 10:                          # tune this threshold
+            logger.warning(
+                f"EXTRACT returned only {len(raw)} listings "
+                f"(expected ≥ 10) — possible partial block."
+            )
+
         # 2 — Staging
         _run("STAGING", run_staging, raw)
 
