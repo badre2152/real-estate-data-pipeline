@@ -93,7 +93,6 @@ data_pipeline/
 │   ├── warehouse/
 │   ├── utils/
 │   └── main.py
-├── tests/
 ├── docs/
 ├── requirements.txt
 └── .env
@@ -229,14 +228,6 @@ The pipeline creates its PostgreSQL schemas and tables as needed.
 
 ---
 
-## 🧪 Testing (Optional)
-
-```bash
-pytest
-```
-
----
-
 ## 🛡️ Data Ethics & Compliance
 
 * No personal data collected
@@ -258,7 +249,7 @@ pytest
 
 ## 👤 Author
 
-**BRAHIM BADRE** – Data Engineering & Analytics Enthusiast
+**BRAHIM BADRE**, Data Engineering & Analytics
 
 ---
 
