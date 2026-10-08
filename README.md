@@ -1,6 +1,14 @@
 # 🚀 Avito Real Estate Data Pipeline
 
-End-to-end data engineering project that transforms raw real estate listings from **Avito.ma** into analytics-ready datasets and machine learning features.
+End to end data engineering project that transforms raw real estate listings from **Avito.ma** into analytics ready datasets and machine learning features.
+
+## 🔗 Project Evolution
+
+This repository documents the earlier version of my Avito real estate data engineering work. It covers the core flow from Selenium extraction through PostgreSQL staging, cleaning, dimensional modeling, BI, and an ML feature store.
+
+The evolved implementation is maintained separately in [real-estate-pipeline](https://github.com/badre2152/real-estate-pipeline). That repository extends the same project direction with a more mature structure, broader automation, documentation, and testing.
+
+Both repositories are intentionally kept to show the technical evolution of the project rather than presenting them as unrelated duplicate projects.
 ---
 ## ⚠️ Disclaimer
 
