@@ -9,9 +9,4 @@ __pycache__/
 
 .env
 
-docker-compose.yml
-
-Dockerfile
-
-
 .DS_Store
