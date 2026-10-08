@@ -63,7 +63,6 @@ ML Feature Store (OBT)
 * **Selenium** → Data extraction
 * **PostgreSQL** → Data warehouse
 * **SQL** → Transformations & analytics
-* **Docker** → Environment orchestration
 * **Streamlit / Power BI** → Data visualization
 
 ---
@@ -96,8 +95,6 @@ data_pipeline/
 │   └── main.py
 ├── tests/
 ├── docs/
-├── docker-compose.yml
-├── Dockerfile
 ├── requirements.txt
 └── .env
 ```
@@ -161,7 +158,7 @@ _cleanup_staging()   → cleanup
 
 ---
 
-## 🐳 Setup & Installation
+## ⚙️ Setup & Installation
 
 ### 1. Clone repository
 
@@ -200,18 +197,21 @@ DB_PASSWORD=change_me_database_password
 
 ## 🚀 Run the Pipeline
 
-### Using Docker
+This earlier version runs locally and expects PostgreSQL to be available using the values from your `.env` file.
+
+Create the database once if it does not already exist:
 
 ```bash
-docker-compose up --build
+createdb avito_db
 ```
 
-### Local execution
+Then run the pipeline:
 
 ```bash
-docker-compose up postgres -d
 python src/main.py
 ```
+
+The pipeline creates its PostgreSQL schemas and tables as needed.
 
 ---
 
@@ -271,7 +271,6 @@ If you found this project useful, consider giving it a star ⭐
 ![Python](https://img.shields.io/badge/python-3.10-blue)
 
 
-![Docker](https://img.shields.io/badge/docker-enabled-blue)
 
 
 ![License](https://img.shields.io/badge/license-MIT-green)
