@@ -180,12 +180,20 @@ pip install -r requirements.txt
 
 ### 3. Configure environment
 
+Create a local `.env` file from the tracked template:
+
+```bash
+cp .env.example .env
 ```
-DB_HOST=
-DB_PORT=
-DB_NAME=
-DB_USER=
-DB_PASSWORD=
+
+Then replace `change_me_database_password` with your PostgreSQL password. The template uses the local defaults expected by the code:
+
+```dotenv
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=avito_db
+DB_USER=postgres
+DB_PASSWORD=change_me_database_password
 ```
 
 ---
